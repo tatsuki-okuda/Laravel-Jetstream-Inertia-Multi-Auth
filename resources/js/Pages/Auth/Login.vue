@@ -14,7 +14,11 @@
             <div>
                 <jet-label for="email" value="Email" />
                 <jet-input id="email" type="email" class="mt-1 block w-full" v-model="form.email" required autofocus />
-            </div>
+            </div>            
+
+            <!-- <div v-if="guard" class="mb-4 font-medium text-sm text-green-600">
+                {{ guard }}
+            </div> -->
 
             <div class="mt-4">
                 <jet-label for="password" value="Password" />
@@ -49,7 +53,6 @@
     import JetCheckbox from '@/Jetstream/Checkbox'
     import JetLabel from '@/Jetstream/Label'
     import JetValidationErrors from '@/Jetstream/ValidationErrors'
-
     export default {
         components: {
             JetAuthenticationCard,
@@ -60,32 +63,38 @@
             JetLabel,
             JetValidationErrors
         },
-
         props: {
             canResetPassword: Boolean,
-            status: String
+            status: String,
+            guard: String
         },
-
         data() {
             return {
                 form: this.$inertia.form({
                     email: '',
                     password: '',
+                    guard: this.guard,
                     remember: false
                 })
             }
         },
-
         methods: {
             submit() {
+                let postRoute ;
+                if(this.form.guard){
+                    postRoute = this.route('admin.login');
+                } else{
+                    postRoute = this.route('login');
+                }
                 this.form
                     .transform(data => ({
                         ... data,
                         remember: this.form.remember ? 'on' : ''
                     }))
-                    .post(this.route('login'), {
+                    .post(postRoute, {
                         onFinish: () => this.form.reset('password'),
                     })
+                
             }
         }
     }
