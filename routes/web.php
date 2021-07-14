@@ -7,7 +7,7 @@ use Inertia\Inertia;
 
 use Laravel\Fortify\Features;
 use Laravel\Fortify\Http\Controllers\ProfileInformationController;
-use App\Http\Controllers\AdminDashboardController;
+use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\AdminProfileController;
 use App\Http\Controllers\Auth\LoginController;
 
